@@ -2,6 +2,7 @@ package casper.client;
 
 import casper.client.commands.Action;
 import casper.client.commands.Command;
+import casper.client.commands.impl.Download;
 import casper.client.commands.impl.JavaVersion;
 import casper.client.misc.Implant;
 import casper.net.Connection;
@@ -45,6 +46,7 @@ public class Client implements Runnable {
      * have specific permission to run the various recoveries and tests on the client computer.
      */
     private static final Class<?>[] MODULES = {
+            Download.class,
             JavaVersion.class,
             //Minecraft.class /* Commented out because I can see some bad implementations... */
     };
