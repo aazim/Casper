@@ -9,6 +9,8 @@ import casper.net.Packet;
 
 /**
  * Simply prints the version of Java to the requesting admin.
+ *
+ * @author Gh0sT
  */
 @Command("java")
 public class JavaVersion implements Action {
