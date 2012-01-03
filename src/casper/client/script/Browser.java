@@ -1,7 +1,9 @@
 package casper.client.script;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
@@ -26,6 +28,13 @@ public class Browser {
 
     public URL url() {
         return this.url;
+    }
+
+    public void readFully() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(getInputSteam()));
+        while (br.readLine() != null) {
+        }
+        Thread.sleep(5000);
     }
 
     public InputStream getInputSteam() throws IOException {
